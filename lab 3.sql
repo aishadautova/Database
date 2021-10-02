@@ -88,12 +88,12 @@ ORDER BY name;
 
 SELECT result.name FROM (
                   select instructor.name, student.name as sname, grade
-                  from teaches,
+                  from advisor,
                        instructor,
                        student,
                        takes
-                  where takes.course_id = teaches.course_id
-                    and teaches.id = instructor.id
+                  where instructor.id = advisor.i_id
+                    and student.id = advisor.s_id
                     and student.id = takes.id
               ) as result
 WHERE grade not in ('A', 'A-', 'B', 'B+')
@@ -102,12 +102,12 @@ group by  result.name
 
 SELECT * FROM (
                   select instructor.name, student.name as sname, grade
-                  from teaches,
+                  from advisor,
                        instructor,
                        student,
                        takes
-                  where takes.course_id = teaches.course_id
-                    and teaches.id = instructor.id
+                  where instructor.id = advisor.i_id
+                    and student.id = advisor.s_id
                     and student.id = takes.id
               ) as result
 WHERE grade not in ('A', 'A-', 'B', 'B+')
@@ -151,7 +151,7 @@ SELECT * FROM (
                      and takes.course_id = teaches.course_id
                      and grade in ('A'))
               ) as result;
-;
+
 
 /*e*/
 
