@@ -7,7 +7,7 @@ drop table manufacturing_plants cascade ;
 drop table mp_assemble cascade ;
 drop table mp_parts cascade ;
 drop table suppliers cascade ;
-drop table parts cascade ;
+drop table parts cascade;
 drop table assemble_cars cascade ;
 drop table dealers cascade ;
 drop table deal_purchase cascade ;
@@ -75,7 +75,7 @@ create table manufacturing_plants
 create table mp_assemble
 (
     mp_id   varchar(5),
-    mp_name varchar(25),
+    mp_name varchar(25) UNIQUE NOT NULL,
     primary key (mp_id),
     foreign key (mp_id) references manufacturing_plants (mp_id)
 );
@@ -83,18 +83,18 @@ create table mp_assemble
 create table mp_parts
 (
     mp_id     varchar(5),
-    mp_name   varchar(25),
+    mp_name   varchar(25) NOT NULL,
     part_id   varchar(20) UNIQUE NOT NULL,
-    part_name varchar(30),
-    date      date,
+    part_name varchar(30) NOT NULL,
+    date      date NOT NULL,
     primary key (part_id),
     foreign key (mp_id) references manufacturing_plants (mp_id)
 );
 
 create table suppliers
 (
-    sup_id    varchar(5),
-    sup_name  varchar(25),
+    sup_id    varchar(5) NOT NULL,
+    sup_name  varchar(25) NOT NULL ,
     part_id   varchar(20) UNIQUE NOT NULL,
     part_name varchar(30),
     date      date,
@@ -129,9 +129,9 @@ create table assemble_cars
 create table dealers
 (
     dealer_id   varchar(5),
-    dealer_name varchar(30),
-    phone       varchar(16),
-    address     varchar(30),
+    dealer_name varchar(30) NOT NULL,
+    phone       varchar(16) NOT NULL,
+    address     varchar(30) NOT NULL,
     primary key (dealer_id)
 );
 
@@ -139,7 +139,7 @@ create table deal_purchase
 (
     VIN       varchar(17),
     dealer_id varchar(5),
-    date      date,
+    date      date NOT NULL,
     primary key (VIN),
     foreign key (dealer_id) references dealers (dealer_id),
     foreign key (VIN) references vehicles (VIN)
@@ -151,7 +151,7 @@ create table orders
     dealer_id  varchar(5),
     cus_id     varchar(5),
     VIN        varchar(17),
-    date       date,
+    date       date NOT NULL,
     primary key (ord_id),
     foreign key (VIN) references vehicles (VIN)
 );
@@ -159,17 +159,17 @@ create table orders
 create table customers
 (
     cus_id  varchar(5),
-    address varchar(30),
-    phone   varchar(16),
+    address varchar(30) NOT NULL,
+    phone   varchar(16) NOT NULL,
     primary key (cus_id)
 );
 
 create table individual_buyer
 (
     cus_id varchar(5),
-    name   varchar(30),
-    gender varchar(6),
-    income int,
+    name   varchar(30) NOT NULL,
+    gender varchar(6) NOT NULL,
+    income int NOT NULL,
     primary key (cus_id),
     foreign key (cus_id) references customers (cus_id)
 );
@@ -177,8 +177,8 @@ create table individual_buyer
 create table company_buyer
 (
     cus_id varchar(5),
-    name   varchar(30),
-    income int,
+    name   varchar(30) NOT NULL,
+    income int NOT NULL,
     primary key (cus_id),
     foreign key (cus_id) references customers (cus_id)
 );
